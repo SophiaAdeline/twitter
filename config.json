@@ -1,0 +1,7 @@
+{
+  "schedule": "0 9 * * *",  // Jam 09:00 UTC setiap hari
+  "link": "https://example.com/blog",
+  "language": "Bahasa Indonesia",
+  "country_code": "ID",      // Kode negara (ID=Indonesia)
+  "max_hashtags": 3
+}
