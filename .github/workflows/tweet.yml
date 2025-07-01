@@ -1,0 +1,33 @@
+name: Auto Tweet
+
+on:
+  schedule:
+    - cron: ${{ fromJson(config.schedule) }}
+  workflow_dispatch:  # Memungkinkan trigger manual
+
+jobs:
+  tweet:
+    runs-on: ubuntu-latest
+    env:
+      TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+      TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+      TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+      TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Install dependencies
+      working-directory: ./src
+      run: pip install -r requirements.txt
+      
+    - name: Run Twitter Bot
+      working-directory: ./src
+      run: python bot.py
